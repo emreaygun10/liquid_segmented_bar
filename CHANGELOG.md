@@ -1,3 +1,7 @@
+## 0.1.1
+
+- Docs: use an absolute URL for the README example GIF so it renders on pub.dev.
+
 ## 0.1.0
 
 - Initial release: `LiquidSegmentedBar`, `LiquidSegment`, `LiquidLabelBehavior`.

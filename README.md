@@ -110,7 +110,7 @@ class _SidePickerState extends State<SidePicker> {
 Segments don't need a visual. Leave out `icon`, `asset` and `visual` for a
 clean, text-only tab bar:
 
-![Text-only segments](doc/images/text_only.gif)
+![Text-only segments](https://raw.githubusercontent.com/emreaygun10/liquid_segmented_bar/main/doc/images/text_only.gif)
 
 ```dart
 enum Sort { hot, latest, top }
