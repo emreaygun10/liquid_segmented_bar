@@ -59,15 +59,15 @@ class LiquidSegmentedBar<T> extends StatelessWidget {
     this.haptics = true,
     this.animationDuration = const Duration(milliseconds: 380),
     this.animationCurve = Curves.easeOutBack,
-  })  : assert(segments.length > 0, 'segments must not be empty'),
-        assert(minHeight > 0, 'minHeight must be > 0'),
-        assert(maxHeight >= minHeight, 'maxHeight must be >= minHeight'),
-        assert(height == null || height > 0, 'height must be > 0'),
-        assert(iconSize > 0 && imageSize > 0, 'visual sizes must be > 0'),
-        assert(labelFontSize == null || labelFontSize > 0),
-        assert(selectedLabelFontSize == null || selectedLabelFontSize > 0),
-        assert(labelMaxLines >= 1, 'labelMaxLines must be >= 1'),
-        assert(labelSpacing >= 0 && blurSigma >= 0);
+  }) : assert(segments.length > 0, 'segments must not be empty'),
+       assert(minHeight > 0, 'minHeight must be > 0'),
+       assert(maxHeight >= minHeight, 'maxHeight must be >= minHeight'),
+       assert(height == null || height > 0, 'height must be > 0'),
+       assert(iconSize > 0 && imageSize > 0, 'visual sizes must be > 0'),
+       assert(labelFontSize == null || labelFontSize > 0),
+       assert(selectedLabelFontSize == null || selectedLabelFontSize > 0),
+       assert(labelMaxLines >= 1, 'labelMaxLines must be >= 1'),
+       assert(labelSpacing >= 0 && blurSigma >= 0);
 
   final List<LiquidSegment<T>> segments;
   final T selected;
@@ -171,9 +171,10 @@ class LiquidSegmentedBar<T> extends StatelessWidget {
       final visual = s.hasVisual ? _visualSlot : 0.0;
       final labelShown = _showsLabel(s, true);
       final fontSize = math.max(_fontSizeFor(s, true), _fontSizeFor(s, false));
-      final label = labelShown
-          ? scaler.scale(fontSize) * _lineHeight * labelMaxLines
-          : 0.0;
+      final label =
+          labelShown
+              ? scaler.scale(fontSize) * _lineHeight * labelMaxLines
+              : 0.0;
       final gap = s.hasVisual && labelShown ? labelSpacing : 0.0;
       tallest = math.max(tallest, visual + gap + label);
     }
@@ -187,8 +188,10 @@ class LiquidSegmentedBar<T> extends StatelessWidget {
     final found = segments.indexWhere((s) => s.value == selected);
     final index = found < 0 ? 0 : found;
     final x = count <= 1 ? 0.0 : -1 + 2 * index / (count - 1);
-    final resolvedHeight =
-        (height ?? _autoHeight(context)).clamp(minHeight, maxHeight);
+    final resolvedHeight = (height ?? _autoHeight(context)).clamp(
+      minHeight,
+      maxHeight,
+    );
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -299,38 +302,40 @@ class LiquidSegmentedBar<T> extends StatelessWidget {
           duration: const Duration(milliseconds: 220),
           switchInCurve: Curves.easeOut,
           switchOutCurve: Curves.easeIn,
-          transitionBuilder: (child, animation) => FadeTransition(
-            opacity: animation,
-            child: SizeTransition(
-              sizeFactor: animation,
-              // ignore: deprecated_member_use
-              axisAlignment: -1,
-              child: child,
-            ),
-          ),
-          child: showLabel
-              ? Padding(
-                  key: const ValueKey('label'),
-                  padding: EdgeInsets.only(
-                    top: segment.hasVisual ? labelSpacing : 0,
-                  ),
-                  child: AnimatedDefaultTextStyle(
-                    duration: const Duration(milliseconds: 220),
-                    style: (labelStyle ??
-                            Theme.of(context).textTheme.labelSmall ??
-                            const TextStyle())
-                        .copyWith(
-                      fontSize: _fontSizeFor(segment, isSelected),
-                      height: _lineHeight,
-                      color: fg,
-                      fontWeight:
-                          isSelected ? FontWeight.w700 : FontWeight.w500,
-                      letterSpacing: 0.1,
+          transitionBuilder:
+              (child, animation) => FadeTransition(
+                opacity: animation,
+                child: SizeTransition(
+                  sizeFactor: animation,
+                  // ignore: deprecated_member_use
+                  axisAlignment: -1,
+                  child: child,
+                ),
+              ),
+          child:
+              showLabel
+                  ? Padding(
+                    key: const ValueKey('label'),
+                    padding: EdgeInsets.only(
+                      top: segment.hasVisual ? labelSpacing : 0,
                     ),
-                    child: label,
-                  ),
-                )
-              : const SizedBox.shrink(key: ValueKey('none')),
+                    child: AnimatedDefaultTextStyle(
+                      duration: const Duration(milliseconds: 220),
+                      style: (labelStyle ??
+                              Theme.of(context).textTheme.labelSmall ??
+                              const TextStyle())
+                          .copyWith(
+                            fontSize: _fontSizeFor(segment, isSelected),
+                            height: _lineHeight,
+                            color: fg,
+                            fontWeight:
+                                isSelected ? FontWeight.w700 : FontWeight.w500,
+                            letterSpacing: 0.1,
+                          ),
+                      child: label,
+                    ),
+                  )
+                  : const SizedBox.shrink(key: ValueKey('none')),
         ),
       ],
     );
@@ -365,9 +370,14 @@ class LiquidSegmentedBar<T> extends StatelessWidget {
     Color accent,
     Color fg,
   ) {
-    final fallback = segment.icon == null
-        ? const SizedBox.shrink()
-        : Icon(segment.icon, size: iconSize, color: isSelected ? accent : fg);
+    final fallback =
+        segment.icon == null
+            ? const SizedBox.shrink()
+            : Icon(
+              segment.icon,
+              size: iconSize,
+              color: isSelected ? accent : fg,
+            );
     final state = LiquidVisualState(
       selected: isSelected,
       size: imageSize,
@@ -429,12 +439,14 @@ class LiquidSegmentedBar<T> extends StatelessWidget {
     final isPng = lower.endsWith('.png');
     String? message;
     if (isSvg && !hasBuilder) {
-      message = '"$asset" is an SVG, which Image.asset/Image.network cannot '
+      message =
+          '"$asset" is an SVG, which Image.asset/Image.network cannot '
           'render. Add flutter_svg to your app and set `assetBuilder` or '
           '`LiquidSegmentedBar.defaultAssetBuilder`, or use '
           '`LiquidSegment.visual`. Falling back to `icon`.';
     } else if (!isSvg && !isPng) {
-      message = '"$asset": recommended image formats are PNG (with '
+      message =
+          '"$asset": recommended image formats are PNG (with '
           'transparency) or SVG. The image will still be rendered.';
     }
     if (message != null && _warnedAssets.add(asset)) {

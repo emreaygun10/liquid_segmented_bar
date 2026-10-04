@@ -28,14 +28,13 @@ class LiquidVisualState {
 ///
 /// The package has no SVG dependency on purpose: add `flutter_svg` (or any
 /// renderer) to your app and plug it in here.
-typedef LiquidAssetBuilder = Widget Function(
-  BuildContext context,
-  String source,
-  LiquidVisualState state,
-);
+typedef LiquidAssetBuilder =
+    Widget Function(
+      BuildContext context,
+      String source,
+      LiquidVisualState state,
+    );
 
 /// Builds a fully custom visual for a single segment.
-typedef LiquidVisualBuilder = Widget Function(
-  BuildContext context,
-  LiquidVisualState state,
-);
+typedef LiquidVisualBuilder =
+    Widget Function(BuildContext context, LiquidVisualState state);

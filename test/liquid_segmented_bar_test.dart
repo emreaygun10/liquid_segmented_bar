@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:liquid_segmented_bar/liquid_segmented_bar.dart';
 
-Widget _host(Widget child) => MaterialApp(
-      home: Scaffold(body: Center(child: child)),
-    );
+Widget _host(Widget child) =>
+    MaterialApp(home: Scaffold(body: Center(child: child)));
 
 const _iconSegments = [
   LiquidSegment(value: 'a', label: 'Alpha', icon: Icons.ac_unit),
@@ -64,8 +63,9 @@ void main() {
     expect(find.text('Charlie'), findsNothing);
   });
 
-  testWidgets('never hides labels but keeps text-only segments readable',
-      (tester) async {
+  testWidgets('never hides labels but keeps text-only segments readable', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       _host(
         LiquidSegmentedBar<String>(
@@ -113,8 +113,9 @@ void main() {
     expect(tester.getSize(find.byType(LiquidSegmentedBar<String>)).height, 50);
   });
 
-  testWidgets('does not overflow in a tiny box with big content',
-      (tester) async {
+  testWidgets('does not overflow in a tiny box with big content', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       _host(
         SizedBox(
@@ -153,8 +154,9 @@ void main() {
               LiquidSegment(
                 value: v,
                 label: v,
-                visualBuilder: (context, state) =>
-                    Text(state.selected ? 'ON-$v' : 'OFF-$v'),
+                visualBuilder:
+                    (context, state) =>
+                        Text(state.selected ? 'ON-$v' : 'OFF-$v'),
               ),
           ],
         ),
