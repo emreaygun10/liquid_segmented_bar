@@ -15,6 +15,7 @@ capsule with a glossy bubble that springs to the selected segment.
 - [Features](#features)
 - [Installation](#installation)
 - [Quick start](#quick-start)
+  - [Text only](#text-only)
 - [Label modes](#label-modes)
 - [Visuals](#visuals)
   - [Icons](#icons)
@@ -103,6 +104,27 @@ class _SidePickerState extends State<SidePicker> {
 
 <!-- IMAGE: doc/images/quick_start.png
      Result of the snippet above. -->
+
+### Text only
+
+Segments don't need a visual. Leave out `icon`, `asset` and `visual` for a
+clean, text-only tab bar:
+
+![Text-only segments](doc/images/text_only.gif)
+
+```dart
+enum Sort { hot, latest, top }
+
+LiquidSegmentedBar<Sort>(
+  selected: _sort,
+  onChanged: (sort) => setState(() => _sort = sort),
+  segments: const [
+    LiquidSegment(value: Sort.hot, label: 'Hot'),
+    LiquidSegment(value: Sort.latest, label: 'New'),
+    LiquidSegment(value: Sort.top, label: 'Top'),
+  ],
+)
+```
 
 > The blur affects whatever is **behind** the bar. It looks best on top of
 > images, gradients or scrolling content, for example in a `Stack`.
@@ -287,6 +309,7 @@ LiquidSegmentedBar<Grenade>(
   labelFontSize: 11,          // all labels
   selectedLabelFontSize: 12,  // selected label only
   labelSpacing: 4,            // gap between visual and label
+  labelAlign: TextAlign.start, // default: TextAlign.center
   contentPadding: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
   // ...
 )
@@ -402,6 +425,7 @@ already selected segment does nothing and does not call `onChanged`.
 | `selectedLabelFontSize` | `double?`                   | `labelFontSize`          | Selected label font size                     |
 | `labelStyle`            | `TextStyle?`                | `TextTheme.labelSmall`   | Base text style                              |
 | `labelMaxLines`         | `int`                       | `1`                      | Lines before ellipsis                        |
+| `labelAlign`            | `TextAlign`                 | `TextAlign.center`       | Horizontal label alignment                   |
 | `labelSpacing`          | `double`                    | `3`                      | Gap between visual and label                 |
 | `contentPadding`        | `EdgeInsets`                | `h: 4, v: 8`             | Inner padding of each segment                |
 | `assetBuilder`          | `LiquidAssetBuilder?`       | `defaultAssetBuilder`    | Asset renderer for this bar                  |

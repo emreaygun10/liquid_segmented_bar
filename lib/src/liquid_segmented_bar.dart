@@ -49,6 +49,7 @@ class LiquidSegmentedBar<T> extends StatelessWidget {
     this.selectedLabelFontSize,
     this.labelStyle,
     this.labelMaxLines = 1,
+    this.labelAlign = TextAlign.center,
     this.labelSpacing = 3,
     this.contentPadding = const EdgeInsets.symmetric(
       horizontal: 4,
@@ -110,6 +111,10 @@ class LiquidSegmentedBar<T> extends StatelessWidget {
 
   /// Maximum label lines before ellipsis.
   final int labelMaxLines;
+
+  /// Horizontal alignment of the label inside its segment.
+  /// Defaults to [TextAlign.center].
+  final TextAlign labelAlign;
 
   /// Gap between visual and label.
   final double labelSpacing;
@@ -276,12 +281,17 @@ class LiquidSegmentedBar<T> extends StatelessWidget {
         isSelected ? foregroundColor : foregroundColor.withValues(alpha: 0.55);
     final showLabel = _showsLabel(segment, isSelected);
 
-    final label = Text(
-      segment.label,
-      maxLines: labelMaxLines,
-      softWrap: labelMaxLines > 1,
-      overflow: TextOverflow.ellipsis,
-      textAlign: TextAlign.center,
+    // Full segment width, so `labelAlign` decides where the text sits
+    // (SizeTransition would otherwise pin it to the start edge).
+    final label = SizedBox(
+      width: double.infinity,
+      child: Text(
+        segment.label,
+        maxLines: labelMaxLines,
+        softWrap: labelMaxLines > 1,
+        overflow: TextOverflow.ellipsis,
+        textAlign: labelAlign,
+      ),
     );
 
     final column = Column(

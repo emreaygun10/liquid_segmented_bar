@@ -186,4 +186,25 @@ void main() {
     expect(find.text('custom:x.svg'), findsOneWidget);
     expect(find.text('custom:y.png'), findsOneWidget);
   });
+
+  testWidgets('labels are centered by default', (tester) async {
+    await tester.pumpWidget(
+      _host(
+        SizedBox(
+          width: 300,
+          child: LiquidSegmentedBar<String>(
+            selected: 'a',
+            onChanged: (_) {},
+            labelBehavior: LiquidLabelBehavior.selectedOnly,
+            segments: _iconSegments,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final icon = tester.getCenter(find.byIcon(Icons.ac_unit));
+    final text = tester.getRect(find.text('Alpha'));
+    expect((text.center.dx - icon.dx).abs(), lessThan(1));
+  });
 }
