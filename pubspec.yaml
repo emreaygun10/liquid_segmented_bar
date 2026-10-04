@@ -2,10 +2,10 @@ name: liquid_segmented_bar
 description: >-
   An iOS "liquid glass" style segmented control for Flutter: a frosted glass
   capsule with an animated glass bubble that slides to the selected segment.
-version: 0.1.0
-homepage: https://github.com/<kullanici>/liquid_segmented_bar
-repository: https://github.com/<kullanici>/liquid_segmented_bar
-issue_tracker: https://github.com/<kullanici>/liquid_segmented_bar/issues
+version: 0.0.1+1
+homepage: https://github.com/emreaygun10/liquid_segmented_bar
+repository: https://github.com/emreaygun10/liquid_segmented_bar
+issue_tracker: https://github.com/emreaygun10/liquid_segmented_bar/issues
 funding:
   - https://buymeacoffee.com/emtay70
 topics:
